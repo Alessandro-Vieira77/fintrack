@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -158,30 +158,57 @@
 }
 
 :root {
+  --primary-blue: oklch(63.34% 0.1923 259.62);
+  --primary-green: oklch(68.13% 0.1872 138.09);
+  --primary-red: oklch(60.71% 0.2204 26.87);
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+
+  /* Fundo da aplicação (<body>) */
+  --background: oklch(14.48% 0 0);
+  --foreground: oklch(100% 0 0);
+
+  /* Fundo do <Card> */
+  --card: oklch(20.46% 0 0);
+  --card-foreground: oklch(100% 0 0);
+
+  /* Fundo do <DropdownMenu>, <HoverCard>, <Popover> */
+  --popover: oklch(20.46% 0 0);
+  --popover-foreground: oklch(100% 0 0);
+
+  /* Botões */
+  --primary: oklch(68.13% 0.1872 138.09);
+  --primary-foreground: oklch(100% 0 0);
+  --secondary: oklch(27.39% 0.0055 286.03);
+  --secondary-foreground: oklch(100% 0 0);
+
+  /* Fundo do <Switch>, <Skeleton> e <TabList> */
+  --muted: oklch(27.39% 0.0055 286.03);
+  --muted-foreground: oklch(71.55% 0 0);
+
+  /* Efeito de hover no <DropdownMenu>, <HoverCard> e <Popover> */
+  --accent: oklch(27.39% 0.0055 286.03);
+  --accent-foreground: oklch(100% 0 0);
+
+  /* Botões perigosos (deleção, por exemplo) */
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
+  --destructive-foreground: oklch(100% 0 0);
+
+  /* Borda dos elementos */
+  --border: oklch(27.39% 0.0055 286.03);
+
+  /*  Borda dos inputs */
+  --input: oklch(27.39% 0.0055 286.03);
+
+  /*  Cor do ring inputs */
   --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+
+  /* Gráficos */
+  --chart-1: oklch(63.04% 0.1101 263.33);
+  --chart-2: oklch(69.94% 0.1339 165.46);
+  --chart-3: oklch(72.27% 0.1502 60.58);
+  --chart-4: oklch(61.93% 0.2029 312.74);
+  --chart-5: oklch(61.18% 0.2093 6.14);
+
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
