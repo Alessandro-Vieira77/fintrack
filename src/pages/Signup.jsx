@@ -71,7 +71,7 @@ function Signup() {
   return (
     <div className="flex min-h-screen max-w-screen flex-col items-center justify-center gap-4">
       <Form {...method}>
-        <form onSubmit={method.handleSubmit(onSubmit)}>
+        <form onSubmit={method.handleSubmit(onSubmit)} className="px-4">
           <Card className="mt-10 w-full max-w-[500px]">
             <CardHeader className="text-center">
               <CardTitle className="text-2xl">Crie sua conta</CardTitle>
@@ -183,7 +183,7 @@ function Signup() {
             </CardContent>
             <CardFooter>
               <Button type="submit" className="w-full">
-                Fazer login
+                Criar conta
               </Button>
             </CardFooter>
           </Card>
