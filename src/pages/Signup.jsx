@@ -39,9 +39,6 @@ const signupSchema = zod.object({
     })
     .email({
       message: 'o campo e-mail é inválido',
-    })
-    .min(1, {
-      message: 'o campo e-mail é obrigatório',
     }),
   password: zod.string().trim().min(6, {
     message: 'a senha deve ter no mínimo 6 caracteres',
@@ -76,8 +73,8 @@ function Signup() {
       <Form {...method}>
         <form onSubmit={method.handleSubmit(onSubmit)}>
           <Card className="mt-10 w-full max-w-[500px]">
-            <CardHeader>
-              <CardTitle className="text-3xl">Crie sua conta</CardTitle>
+            <CardHeader className="text-center">
+              <CardTitle className="text-2xl">Crie sua conta</CardTitle>
               <CardDescription>Insira seus dados abaixo.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -88,7 +85,7 @@ function Signup() {
                   <FormItem>
                     <FormLabel>Primeiro nome</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite seu primeiro nome" {...field} />
+                      <Input placeholder="Digite seu primeiro nome" {...field} autoComplete="off" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -102,7 +99,7 @@ function Signup() {
                   <FormItem>
                     <FormLabel>Sobrenome</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite seu sobrenome" {...field} />
+                      <Input placeholder="Digite seu sobrenome" {...field} autoComplete="off" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -116,7 +113,7 @@ function Signup() {
                   <FormItem>
                     <FormLabel>E-mail</FormLabel>
                     <FormControl>
-                      <Input placeholder="Digite seu e-mail" {...field} />
+                      <Input placeholder="Digite seu e-mail" {...field} autoComplete="off" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -130,7 +127,7 @@ function Signup() {
                   <FormItem>
                     <FormLabel>Senha</FormLabel>
                     <FormControl>
-                      <PasswordInput {...field} />
+                      <PasswordInput {...field} autoComplete="off" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -162,6 +159,7 @@ function Signup() {
                           checked={field.value}
                           onCheckedChange={field.onChange}
                           id="terms"
+                          name="terms"
                           className="border-primary-green border-2"
                         />
                         <div className="text-xs">
@@ -193,9 +191,9 @@ function Signup() {
       </Form>
       <div className="mb-6 flex w-[500px] items-center justify-center gap-1">
         <p className="text-muted-foreground opacity-50">Ainda não possui uma conta? </p>
-        <Button variant="link" asChild>
+        <Button variant="link" className="p-0" asChild>
           <Link to={'/login'} className="text-primary">
-            faça login
+            Faça login
           </Link>
         </Button>
       </div>
