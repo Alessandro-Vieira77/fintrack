@@ -46,9 +46,9 @@ function Login() {
   }
 
   return (
-    <div className="flex min-h-screen max-w-screen flex-col items-center justify-center gap-8">
+    <div className="flex min-h-screen max-w-screen flex-col items-center justify-center gap-4">
       <Form {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)} className="w-full max-w-[500px]">
+        <form onSubmit={methods.handleSubmit(onSubmit)} className="w-full max-w-[500px] px-4">
           <Card className="w-full max-w-[500px]">
             <CardHeader className="text-center">
               <CardTitle className="text-2xl">Entre na sua conta</CardTitle>
