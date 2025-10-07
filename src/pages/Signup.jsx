@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router'
 import { toast } from 'sonner'
@@ -105,8 +105,32 @@ function Signup() {
     })
   }
 
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const acessToken = localStorage.getItem('accessToken')
+        const refreshToken = localStorage.getItem('refreshToken')
+        if (!acessToken && !refreshToken) {
+          return
+        }
+
+        const { data: response } = await api.get('/users/me', {
+          headers: {
+            Authorization: `Bearer ${acessToken}`,
+          },
+        })
+        setUser(response)
+      } catch (error) {
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+        toast.error('Erro ao buscar usuário. Tente novamente.', error)
+      }
+    }
+    getUser()
+  }, [])
+
   if (user) {
-    return <h1>olá {user.first_name}</h1>
+    return <h1>Olá, {user.first_name}</h1>
   }
 
   return (
