@@ -95,9 +95,9 @@ function Signup() {
         toast.success('Conta criada com sucesso!')
         const accessToken = createdUser.tokens.accessToken
         const refreshToken = createdUser.tokens.refreshToken
-        setUser(createdUser)
         localStorage.setItem('accessToken', accessToken)
         localStorage.setItem('refreshToken', refreshToken)
+        setUser(createdUser)
       },
       onError: () => {
         toast.error('Erro ao criar conta. Tente novamente.')
@@ -254,7 +254,7 @@ function Signup() {
           </Card>
         </form>
       </Form>
-      <div className="mb-6 flex w-[500px] items-center justify-center gap-1">
+      <div className="mb-6 flex max-w-[500px] items-center justify-center gap-1">
         <p className="text-muted-foreground opacity-50">Ainda não possui uma conta? </p>
         <Button variant="link" className="p-0" asChild>
           <Link to={'/login'} className="text-primary">
