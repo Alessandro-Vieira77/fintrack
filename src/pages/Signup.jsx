@@ -1,9 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router'
-import { toast } from 'sonner'
 import * as zod from 'zod'
 
 import PasswordInput from '@/components/password-input'
@@ -26,7 +24,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { api } from '@/lib/axios'
+import { authContext } from '@/context/auth'
 
 const signupSchema = zod
   .object({
@@ -61,20 +59,7 @@ const signupSchema = zod
   })
 
 function Signup() {
-  const [user, setUser] = useState(null)
-  const { mutate: signupMutation } = useMutation({
-    mutationKey: ['signup'],
-    mutationFn: async vairables => {
-      const { data: response } = await api.post('/users', {
-        first_name: vairables?.firstName,
-        last_name: vairables?.lastName,
-        email: vairables?.email,
-        password: vairables?.password,
-      })
-
-      return response
-    },
-  })
+  const { user, signIn } = useContext(authContext)
 
   const method = useForm({
     resolver: zodResolver(signupSchema),
@@ -90,47 +75,15 @@ function Signup() {
 
   function onSubmit(data) {
     console.log(data)
-    signupMutation(data, {
-      onSuccess: createdUser => {
-        toast.success('Conta criada com sucesso!')
-        const accessToken = createdUser.tokens.accessToken
-        const refreshToken = createdUser.tokens.refreshToken
-        localStorage.setItem('accessToken', accessToken)
-        localStorage.setItem('refreshToken', refreshToken)
-        setUser(createdUser)
-      },
-      onError: () => {
-        toast.error('Erro ao criar conta. Tente novamente.')
-      },
-    })
+    signIn(data)
   }
 
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const acessToken = localStorage.getItem('accessToken')
-        const refreshToken = localStorage.getItem('refreshToken')
-        if (!acessToken && !refreshToken) {
-          return
-        }
-
-        const { data: response } = await api.get('/users/me', {
-          headers: {
-            Authorization: `Bearer ${acessToken}`,
-          },
-        })
-        setUser(response)
-      } catch (error) {
-        localStorage.removeItem('accessToken')
-        localStorage.removeItem('refreshToken')
-        toast.error('Erro ao buscar usuário. Tente novamente.', error)
-      }
-    }
-    getUser()
-  }, [])
-
   if (user) {
-    return <h1>Olá, {user.first_name}</h1>
+    return (
+      <h1>
+        Olá, {user.first_name} {user.last_name} seja bem vindo!
+      </h1>
+    )
   }
 
   return (

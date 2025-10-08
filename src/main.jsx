@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from 'react-router'
 
 import { Toaster } from '@/components/ui/sonner'
 
+import { AuthContextProvider } from './context/auth'
 import Home from './pages/Home.jsx'
 import Login from './pages/Login.jsx'
 import NotFound from './pages/Not-Found.jsx'
@@ -17,15 +18,17 @@ const queryClient = new QueryClient()
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Toaster />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <AuthContextProvider>
+        <Toaster />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthContextProvider>
     </QueryClientProvider>
   </StrictMode>,
 )
