@@ -31,6 +31,7 @@ export const AuthContextProvider = ({ children }) => {
     signupMutation(data, {
       onSuccess: createdUser => {
         toast.success('Conta criada com sucesso!')
+
         const accessToken = createdUser.tokens.accessToken
         const refreshToken = createdUser.tokens.refreshToken
         localStorage.setItem('accessToken', accessToken)
@@ -39,6 +40,33 @@ export const AuthContextProvider = ({ children }) => {
       },
       onError: () => {
         toast.error('Erro ao criar conta. Tente novamente.')
+      },
+    })
+  }
+
+  const { mutate: signMutation } = useMutation({
+    mutationKey: ['login'],
+    mutationFn: async login => {
+      const { data: response } = await api.post('/users/login', {
+        email: login?.email,
+        password: login?.password,
+      })
+      return response
+    },
+  })
+
+  function signIn(data) {
+    signMutation(data, {
+      onSuccess: login => {
+        toast.success('Login realizado com sucesso!')
+        const accessToken = login.tokens.accessToken
+        const refreshToken = login.tokens.refreshToken
+        localStorage.setItem('accessToken', accessToken)
+        localStorage.setItem('refreshToken', refreshToken)
+        setUser(login)
+      },
+      onError: error => {
+        toast.error('Erro ao fazer login. Tente novamente.', error)
       },
     })
   }
@@ -71,7 +99,7 @@ export const AuthContextProvider = ({ children }) => {
     <authContext.Provider
       value={{
         user: user,
-        login: () => {},
+        login: signIn,
         signIn: signUp,
       }}
     >

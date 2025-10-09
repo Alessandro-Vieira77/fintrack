@@ -1,9 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router'
-import { toast } from 'sonner'
 import * as zod from 'zod'
 
 import PasswordInput from '@/components/password-input'
@@ -25,7 +23,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { api } from '@/lib/axios'
+
+import { authContext } from '../context/auth'
 
 const loginSchema = zod.object({
   email: zod.string().trim().email({
@@ -37,17 +36,7 @@ const loginSchema = zod.object({
 })
 
 function Login() {
-  const [userLogin, setUserLogin] = useState(null)
-  const { mutate: signMutation } = useMutation({
-    mutationKey: ['login'],
-    mutationFn: async login => {
-      const { data: response } = await api.post('/users/login', {
-        email: login?.email,
-        password: login?.password,
-      })
-      return response
-    },
-  })
+  const { login, user: userLogin } = useContext(authContext)
 
   const methods = useForm({
     resolver: zodResolver(loginSchema),
@@ -58,44 +47,8 @@ function Login() {
   })
 
   function onSubmit(data) {
-    signMutation(data, {
-      onSuccess: login => {
-        toast.success('Login realizado com sucesso!')
-        const accessToken = login.tokens.accessToken
-        const refreshToken = login.tokens.refreshToken
-        localStorage.setItem('accessToken', accessToken)
-        localStorage.setItem('refreshToken', refreshToken)
-        setUserLogin(login)
-      },
-      onError: error => {
-        toast.error('Erro ao fazer login. Tente novamente.', error)
-      },
-    })
+    login(data)
   }
-
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const accessToken = localStorage.getItem('accessToken')
-        const refreshToken = localStorage.getItem('refreshToken')
-        if (!accessToken && !refreshToken) {
-          return
-        }
-        const { data: response } = await api.get('/users/me', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        })
-        setUserLogin(response)
-      } catch (error) {
-        toast.error('Erro ao fazer login. Tente novamente.')
-        console.log(error)
-        localStorage.removeItem('accessToken')
-        localStorage.removeItem('refreshToken')
-      }
-    }
-    getUser()
-  }, [])
 
   if (userLogin) {
     return (
