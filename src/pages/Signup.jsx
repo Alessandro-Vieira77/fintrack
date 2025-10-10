@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router'
 import * as zod from 'zod'
@@ -24,7 +23,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { authContext } from '@/context/auth'
+import { useAuthContext } from '@/context/auth'
 
 const signupSchema = zod
   .object({
@@ -59,7 +58,7 @@ const signupSchema = zod
   })
 
 function Signup() {
-  const { user, signIn } = useContext(authContext)
+  const { user, signIn } = useAuthContext()
 
   const method = useForm({
     resolver: zodResolver(signupSchema),

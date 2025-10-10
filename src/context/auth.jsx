@@ -1,8 +1,10 @@
 import { useMutation } from '@tanstack/react-query'
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
 import { api } from '@/lib/axios'
+
+export const useAuthContext = () => useContext(authContext)
 
 export const authContext = createContext({
   user: null,
