@@ -6,6 +6,19 @@ import { api } from '@/lib/axios'
 
 export const useAuthContext = () => useContext(authContext)
 
+const KEY_ACCESS_TOKEN = 'accessToken'
+const KEY_REFRESH_TOKEN = 'refreshToken'
+
+const setTokens = tokens => {
+  localStorage.setItem(KEY_ACCESS_TOKEN, tokens?.accessToken)
+  localStorage.setItem(KEY_REFRESH_TOKEN, tokens?.refreshToken)
+}
+
+const removeTokens = () => {
+  localStorage.removeItem(KEY_ACCESS_TOKEN)
+  localStorage.removeItem(KEY_REFRESH_TOKEN)
+}
+
 export const authContext = createContext({
   user: null,
   login: () => {},
@@ -34,10 +47,7 @@ export const AuthContextProvider = ({ children }) => {
       onSuccess: createdUser => {
         toast.success('Conta criada com sucesso!')
 
-        const accessToken = createdUser.tokens.accessToken
-        const refreshToken = createdUser.tokens.refreshToken
-        localStorage.setItem('accessToken', accessToken)
-        localStorage.setItem('refreshToken', refreshToken)
+        setTokens(createdUser.tokens)
         setUser(createdUser)
       },
       onError: () => {
@@ -61,10 +71,7 @@ export const AuthContextProvider = ({ children }) => {
     signMutation(data, {
       onSuccess: login => {
         toast.success('Login realizado com sucesso!')
-        const accessToken = login.tokens.accessToken
-        const refreshToken = login.tokens.refreshToken
-        localStorage.setItem('accessToken', accessToken)
-        localStorage.setItem('refreshToken', refreshToken)
+        setTokens(login.tokens)
         setUser(login)
       },
       onError: error => {
@@ -89,8 +96,7 @@ export const AuthContextProvider = ({ children }) => {
         })
         setUser(response)
       } catch (error) {
-        localStorage.removeItem('accessToken')
-        localStorage.removeItem('refreshToken')
+        removeTokens()
         toast.error('Erro ao buscar usuário. Tente novamente.', error)
       }
     }
