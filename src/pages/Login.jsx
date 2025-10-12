@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
-import { useAuthContext } from '../context/auth'
+import { UseAuthContext } from '../context/auth'
 
 const loginSchema = zod.object({
   email: zod.string().trim().email({
@@ -35,7 +35,7 @@ const loginSchema = zod.object({
 })
 
 function Login() {
-  const { login, user: userLogin } = useAuthContext()
+  const { login, user: userLogin, initialization } = UseAuthContext()
 
   const methods = useForm({
     resolver: zodResolver(loginSchema),
@@ -47,6 +47,10 @@ function Login() {
 
   function onSubmit(data) {
     login(data)
+  }
+
+  if (initialization) {
+    return null
   }
 
   if (userLogin) {

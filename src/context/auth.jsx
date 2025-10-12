@@ -4,8 +4,6 @@ import { toast } from 'sonner'
 
 import { api } from '@/lib/axios'
 
-export const useAuthContext = () => useContext(authContext)
-
 const KEY_ACCESS_TOKEN = 'accessToken'
 const KEY_REFRESH_TOKEN = 'refreshToken'
 
@@ -25,7 +23,10 @@ export const authContext = createContext({
   signIn: () => {},
 })
 
+export const UseAuthContext = () => useContext(authContext)
+
 export const AuthContextProvider = ({ children }) => {
+  const [initialization, setInitialization] = useState(true)
   const [user, setUser] = useState(null)
 
   const { mutate: signupMutation } = useMutation({
@@ -81,6 +82,7 @@ export const AuthContextProvider = ({ children }) => {
   }
 
   useEffect(() => {
+    setInitialization(true)
     const getUser = async () => {
       try {
         const acessToken = localStorage.getItem('accessToken')
@@ -96,8 +98,11 @@ export const AuthContextProvider = ({ children }) => {
         })
         setUser(response)
       } catch (error) {
+        setUser(null)
         removeTokens()
         toast.error('Erro ao buscar usuário. Tente novamente.', error)
+      } finally {
+        setInitialization(false)
       }
     }
     getUser()
@@ -109,6 +114,7 @@ export const AuthContextProvider = ({ children }) => {
         user: user,
         login: signIn,
         signIn: signUp,
+        initialization,
       }}
     >
       {children}
