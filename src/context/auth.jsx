@@ -2,19 +2,17 @@ import { useMutation } from '@tanstack/react-query'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
-import { api } from '@/lib/axios'
-
-const KEY_ACCESS_TOKEN = 'accessToken'
-const KEY_REFRESH_TOKEN = 'refreshToken'
+import { STORAGE_KEY_ACCESS_TOKEN, STORAGE_KEY_REFRESH_TOKEN } from '@/constants/local-storage'
+import { protecdedApi, publicApi } from '@/lib/axios'
 
 const setTokens = tokens => {
-  localStorage.setItem(KEY_ACCESS_TOKEN, tokens?.accessToken)
-  localStorage.setItem(KEY_REFRESH_TOKEN, tokens?.refreshToken)
+  localStorage.setItem(STORAGE_KEY_ACCESS_TOKEN, tokens?.accessToken)
+  localStorage.setItem(STORAGE_KEY_REFRESH_TOKEN, tokens?.refreshToken)
 }
 
 const removeTokens = () => {
-  localStorage.removeItem(KEY_ACCESS_TOKEN)
-  localStorage.removeItem(KEY_REFRESH_TOKEN)
+  localStorage.removeItem(STORAGE_KEY_ACCESS_TOKEN)
+  localStorage.removeItem(STORAGE_KEY_REFRESH_TOKEN)
 }
 
 export const authContext = createContext({
@@ -33,7 +31,7 @@ export const AuthContextProvider = ({ children }) => {
   const { mutate: signupMutation } = useMutation({
     mutationKey: ['signup'],
     mutationFn: async vairables => {
-      const { data: response } = await api.post('/users', {
+      const { data: response } = await publicApi.post('/users', {
         first_name: vairables?.firstName,
         last_name: vairables?.lastName,
         email: vairables?.email,
@@ -61,7 +59,7 @@ export const AuthContextProvider = ({ children }) => {
   const { mutate: signMutation } = useMutation({
     mutationKey: ['login'],
     mutationFn: async login => {
-      const { data: response } = await api.post('/users/login', {
+      const { data: response } = await publicApi.post('/users/login', {
         email: login?.email,
         password: login?.password,
       })
@@ -92,7 +90,7 @@ export const AuthContextProvider = ({ children }) => {
           return
         }
 
-        const { data: response } = await api.get('/users/me', {
+        const { data: response } = await protecdedApi.get('/users/me', {
           headers: {
             Authorization: `Bearer ${acessToken}`,
           },
