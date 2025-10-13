@@ -98,8 +98,8 @@ export const AuthContextProvider = ({ children }) => {
         setUser(response)
       } catch (error) {
         setUser(null)
-        removeTokens()
-        toast.error('Erro ao buscar usuário. Tente novamente.', error)
+        toast.error('Erro ao buscar usuário. Tente novamente.')
+        console.log(error)
       } finally {
         setInitialization(false)
       }
