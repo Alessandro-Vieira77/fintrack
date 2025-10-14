@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router'
+import { Navigate } from 'react-router'
 import * as zod from 'zod'
 
 import PasswordInput from '@/components/password-input'
@@ -54,11 +55,7 @@ function Login() {
   }
 
   if (user) {
-    return (
-      <h1>
-        Olá {user?.firstName} {user?.lastName}
-      </h1>
-    )
+    return <Navigate to={'/'} />
   }
 
   return (

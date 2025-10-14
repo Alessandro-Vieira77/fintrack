@@ -84,7 +84,7 @@ function Signup() {
   if (user) {
     return (
       <h1>
-        Olá, {user.first_name} {user.last_name} seja bem vindo!
+        Olá, {user.firstName} {user.lastName} seja bem vindo!
       </h1>
     )
   }
