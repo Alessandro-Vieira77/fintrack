@@ -18,7 +18,7 @@ function home() {
   return (
     <div>
       <h1 className="m-2">
-        Welcome {user?.first_name} {user?.last_name}
+        Welcome {user?.firstName} {user?.lastName}
       </h1>
       <Button onClick={signOut}> Sair </Button>
     </div>

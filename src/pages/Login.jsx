@@ -35,7 +35,7 @@ const loginSchema = zod.object({
 })
 
 function Login() {
-  const { login, user: userLogin, initialization } = UseAuthContext()
+  const { login, user, initialization } = UseAuthContext()
 
   const methods = useForm({
     resolver: zodResolver(loginSchema),
@@ -53,10 +53,10 @@ function Login() {
     return null
   }
 
-  if (userLogin) {
+  if (user) {
     return (
       <h1>
-        Olá {userLogin?.first_name} {userLogin?.last_name}
+        Olá {user?.firstName} {user?.lastName}
       </h1>
     )
   }

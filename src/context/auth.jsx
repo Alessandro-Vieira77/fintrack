@@ -3,7 +3,8 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
 import { STORAGE_KEY_ACCESS_TOKEN, STORAGE_KEY_REFRESH_TOKEN } from '@/constants/local-storage'
-import { protecdedApi, publicApi } from '@/lib/axios'
+
+import { userService } from '../service/user'
 
 const setTokens = tokens => {
   localStorage.setItem(STORAGE_KEY_ACCESS_TOKEN, tokens?.accessToken)
@@ -30,13 +31,8 @@ export const AuthContextProvider = ({ children }) => {
 
   const { mutate: signupMutation } = useMutation({
     mutationKey: ['signup'],
-    mutationFn: async vairables => {
-      const { data: response } = await publicApi.post('/users', {
-        first_name: vairables?.firstName,
-        last_name: vairables?.lastName,
-        email: vairables?.email,
-        password: vairables?.password,
-      })
+    mutationFn: vairables => {
+      const response = userService.signup(vairables)
 
       return response
     },
@@ -58,11 +54,8 @@ export const AuthContextProvider = ({ children }) => {
 
   const { mutate: signMutation } = useMutation({
     mutationKey: ['login'],
-    mutationFn: async login => {
-      const { data: response } = await publicApi.post('/users/login', {
-        email: login?.email,
-        password: login?.password,
-      })
+    mutationFn: login => {
+      const response = userService.signIn(login)
       return response
     },
   })
@@ -84,17 +77,13 @@ export const AuthContextProvider = ({ children }) => {
     setInitialization(true)
     const getUser = async () => {
       try {
-        const acessToken = localStorage.getItem('accessToken')
-        const refreshToken = localStorage.getItem('refreshToken')
+        const acessToken = localStorage.getItem(STORAGE_KEY_ACCESS_TOKEN)
+        const refreshToken = localStorage.getItem(STORAGE_KEY_REFRESH_TOKEN)
         if (!acessToken && !refreshToken) {
           return
         }
 
-        const { data: response } = await protecdedApi.get('/users/me', {
-          headers: {
-            Authorization: `Bearer ${acessToken}`,
-          },
-        })
+        const response = await userService.getMe()
         setUser(response)
       } catch (error) {
         setUser(null)
