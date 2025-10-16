@@ -25,7 +25,7 @@ export default function Header() {
         </div>
         <div>
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
               <Button variant="outline" className="space-x-1">
                 <Avatar className="h-6 w-6">
                   <AvatarImage className="rounded-full" src={'https://github.com/shadcn.png'} />
