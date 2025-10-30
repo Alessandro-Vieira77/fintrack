@@ -1,6 +1,4 @@
 import * as LabelPrimitive from '@radix-ui/react-label'
-// eslint-disable-next-line no-unused-vars
-import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 

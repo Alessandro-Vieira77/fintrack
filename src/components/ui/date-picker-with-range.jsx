@@ -1,43 +1,25 @@
-'use client'
-
 import { format } from 'date-fns'
-import { ptBR } from 'date-fns/locale/pt-BR'
-import { Calendar as CalendarIcon } from 'lucide-react'
+import { ptBR } from 'date-fns/locale'
+import { CalendarIcon } from 'lucide-react'
+import { useState } from 'react'
 
-import { Button } from '@/components/ui/button'
-import { Calendar } from '@/components/ui/calendar'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { cn } from '@/lib/utils'
+import { Button } from './button'
+import { Calendar } from './calendar'
+import { Popover, PopoverContent, PopoverTrigger } from './popover'
 
-export const DatePickerWithRange = ({
-  value,
-  onChange,
-  className,
-  placeholder = 'Selecione uma data',
-}) => {
+export const DatePickerWithRange = ({ value, onChange, placeholder = 'Selecione uma data' }) => {
+  const [isOpen, setIsOpen] = useState(false)
   return (
-    <div className={cn('grid gap-2', className)}>
-      <Popover>
+    <div className="flex flex-col gap-3">
+      <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
-          <Button
-            id="date"
-            variant={'outline'}
-            className={cn(
-              'w-full justify-start text-left font-normal',
-              !value && 'text-muted-foreground',
-            )}
-          >
+          <Button variant="outline" id="date" className="gap-2 font-normal">
             <CalendarIcon />
             {value?.from ? (
               value.to ? (
                 <>
-                  {format(value.from, 'LLL dd, y', {
-                    locale: ptBR,
-                  })}{' '}
-                  -{' '}
-                  {format(value.to, 'LLL dd, y', {
-                    locale: ptBR,
-                  })}
+                  {format(value.from, 'LL dd, y', { locale: ptBR })} -{' '}
+                  {format(value.to, 'LL dd, y', { locale: ptBR })}
                 </>
               ) : (
                 format(value.from, 'LLL dd, y', {
@@ -49,15 +31,14 @@ export const DatePickerWithRange = ({
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
+        <PopoverContent className="w-auto overflow-auto p-0" align="start">
           <Calendar
-            initialFocus
-            mode="range"
+            mode="single"
             defaultMonth={value?.from}
+            numberOfMonths={2}
             selected={value}
             onSelect={onChange}
-            numberOfMonths={2}
-            locale={ptBR}
+            className="rounded-lg border shadow-sm"
           />
         </PopoverContent>
       </Popover>
