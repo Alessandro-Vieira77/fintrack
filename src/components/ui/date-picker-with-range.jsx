@@ -18,8 +18,13 @@ export const DatePickerWithRange = ({ value, onChange, placeholder = 'Selecione 
             {value?.from ? (
               value.to ? (
                 <>
-                  {format(value.from, 'LL dd, y', { locale: ptBR })} -{' '}
-                  {format(value.to, 'LL dd, y', { locale: ptBR })}
+                  {format(value.from, 'LLL dd, y', {
+                    locale: ptBR,
+                  })}{' '}
+                  -{' '}
+                  {format(value.to, 'LLL dd, y', {
+                    locale: ptBR,
+                  })}
                 </>
               ) : (
                 format(value.from, 'LLL dd, y', {
@@ -33,12 +38,13 @@ export const DatePickerWithRange = ({ value, onChange, placeholder = 'Selecione 
         </PopoverTrigger>
         <PopoverContent className="w-auto overflow-auto p-0" align="start">
           <Calendar
-            mode="single"
+            mode="range"
             defaultMonth={value?.from}
             numberOfMonths={2}
             selected={value}
             onSelect={onChange}
             className="rounded-lg border shadow-sm"
+            locale={ptBR}
           />
         </PopoverContent>
       </Popover>
