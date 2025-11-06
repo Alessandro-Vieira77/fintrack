@@ -10,12 +10,11 @@ import BalanceItem from './balance-item'
 export default function Balance() {
   const { user } = UseAuthContext()
   const [searchParams] = useSearchParams()
+  const from = searchParams.get('from')
+  const to = searchParams.get('to')
   const { data } = useQuery({
-    queryKey: ['balance', user.id],
+    queryKey: ['balance', user.id, from, to],
     queryFn: () => {
-      const from = searchParams.get('from')
-      const to = searchParams.get('to')
-
       return userService.getBalance({ from, to })
     },
   })

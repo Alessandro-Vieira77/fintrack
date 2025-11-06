@@ -30,7 +30,14 @@ export default function DateSelection() {
       queryParams.set('from', formtDateToQueryParams(date.from))
       queryParams.set('to', formtDateToQueryParams(date.to))
       navigate(`/?${queryParams.toString()}`)
-      queryClient.invalidateQueries({ queryKey: ['balance', user.id] })
+      queryClient.invalidateQueries({
+        queryKey: [
+          'balance',
+          user.id,
+          formtDateToQueryParams(date.from),
+          formtDateToQueryParams(date.to),
+        ],
+      })
     }
   }, [navigate, date, queryClient, user.id])
 
