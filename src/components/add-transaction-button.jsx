@@ -1,7 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Landmark, PlusIcon, TrendingDown, TrendingUp } from 'lucide-react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { Landmark, Loader2Icon, PlusIcon, TrendingDown, TrendingUp } from 'lucide-react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
+import { toast } from 'sonner'
 import z from 'zod'
 
 import { Button } from '@/components/ui/button'
@@ -16,11 +19,27 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
+import { UseAuthContext } from '@/context/auth'
+import { trasactionService } from '@/service/transaction'
 
 import { DatePicker } from './ui/date-peker'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form'
 
 export default function AddTransactionButton() {
+  const [dialogIsOpen, setDialogIsOpen] = useState(false)
+
+  const queryClient = useQueryClient()
+  const { user } = UseAuthContext()
+  const { mutateAsync: createTrasaction } = useMutation({
+    mutationKey: ['createTransaction'],
+    mutationFn: data => trasactionService.create(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['balance', user?.id],
+      })
+    },
+  })
+
   const formSchema = z.object({
     name: z
       .string({
@@ -50,12 +69,18 @@ export default function AddTransactionButton() {
     shouldUnregister: true,
   })
 
-  const onSubmit = data => {
-    console.log(data)
+  const onSubmit = async data => {
+    try {
+      await createTrasaction(data)
+      toast.success('Transação adicionada com sucesso')
+      setDialogIsOpen(false)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
-    <Dialog>
+    <Dialog open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
       <DialogTrigger asChild>
         <Button className="font-semibold">
           Nova transação
@@ -91,14 +116,15 @@ export default function AddTransactionButton() {
                   <FormLabel>Valor</FormLabel>
                   <FormControl>
                     <NumericFormat
+                      {...field}
+                      placeholder="Digite o valor da transação"
                       thousandSeparator="."
                       decimalSeparator=","
                       prefix="R$ "
                       allowNegative={false}
                       customInput={Input}
-                      // onValueChange
-                      onValueChange={value => field.onChange(value.floatValue)}
-                      {...field}
+                      onChange={() => {}}
+                      onValueChange={values => field.onChange(values.floatValue)}
                     />
                   </FormControl>
                   <FormMessage />
@@ -160,13 +186,16 @@ export default function AddTransactionButton() {
                 </FormItem>
               )}
             />
-            <DialogFooter className="sm:justify-start">
+            <DialogFooter className="grid grid-cols-2 sm:justify-start">
               <DialogClose asChild>
-                <Button type="button" variant="secondary">
+                <Button type="button" variant="secondary" disabled={form.formState.isSubmitting}>
                   Cancelar
                 </Button>
               </DialogClose>
-              <Button type="submit">Adicionar</Button>
+              <Button type="submit" disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting && <Loader2Icon className="animate-spin" />}
+                Adicionar
+              </Button>
             </DialogFooter>
           </form>
         </Form>
