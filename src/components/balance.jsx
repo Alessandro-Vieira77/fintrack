@@ -17,6 +17,8 @@ export default function Balance() {
     queryFn: () => {
       return userService.getBalance({ from, to })
     },
+    staleTime: 1000 * 60 * 5, // 5 minutos
+    enabled: Boolean(from) && Boolean(to) && Boolean(user.id),
   })
 
   console.log(data)
