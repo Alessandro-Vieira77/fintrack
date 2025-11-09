@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { addMonths } from 'date-fns'
+import { addMonths, isValid } from 'date-fns'
 import { format } from 'date-fns'
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
@@ -15,12 +15,33 @@ export default function DateSelection() {
   const [searchParams] = useSearchParams()
 
   const navigate = useNavigate()
-  const [date, setDate] = useState({
-    from: searchParams.get('from') ? new Date(searchParams.get('from') + 'T00:00:00') : new Date(),
-    to: searchParams.get('to')
-      ? new Date(searchParams.get('to') + 'T00:00:00')
-      : addMonths(new Date(), 1),
-  })
+
+  const getInitialDateState = searchParams => {
+    const from = searchParams.get('from')
+    const to = searchParams.get('to')
+
+    const defaultDate = {
+      from: new Date(),
+      to: addMonths(new Date(), 1),
+    }
+
+    if (!from || !to) {
+      return defaultDate
+    }
+
+    const dataAreInvalid = !isValid(new Date(from)) || !isValid(new Date(to))
+
+    if (dataAreInvalid) {
+      return defaultDate
+    }
+
+    return {
+      from: new Date(from + 'T00:00:00'),
+      to: new Date(to + 'T00:00:00'),
+    }
+  }
+
+  const [date, setDate] = useState(getInitialDateState(searchParams))
 
   useEffect(() => {
     if (!date?.from || !date?.to) return
