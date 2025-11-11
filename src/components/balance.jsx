@@ -1,25 +1,15 @@
-import { useQuery } from '@tanstack/react-query'
 import { Landmark, Proportions, TrendingDown, TrendingUp } from 'lucide-react'
 import { useSearchParams } from 'react-router'
 
-import { UseAuthContext } from '@/context/auth'
-import { userService } from '@/service/user'
+import { useGetUserBalance } from '@/API/hooks/user'
 
 import BalanceItem from './balance-item'
 
 export default function Balance() {
-  const { user } = UseAuthContext()
   const [searchParams] = useSearchParams()
   const from = searchParams.get('from')
   const to = searchParams.get('to')
-  const { data } = useQuery({
-    queryKey: ['balance', user.id, from, to],
-    queryFn: () => {
-      return userService.getBalance({ from, to })
-    },
-    staleTime: 1000 * 60 * 5, // 5 minutos
-    enabled: Boolean(from) && Boolean(to) && Boolean(user.id),
-  })
+  const { data } = useGetUserBalance({ from, to })
 
   console.log(data)
 

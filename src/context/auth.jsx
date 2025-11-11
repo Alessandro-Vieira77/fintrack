@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 
 import { STORAGE_KEY_ACCESS_TOKEN, STORAGE_KEY_REFRESH_TOKEN } from '@/constants/local-storage'
 
-import { userService } from '../service/user'
+import { userService } from '../API/service/user'
 
 const setTokens = tokens => {
   localStorage.setItem(STORAGE_KEY_ACCESS_TOKEN, tokens?.accessToken)
