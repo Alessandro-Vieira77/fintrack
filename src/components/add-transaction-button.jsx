@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Landmark, Loader2Icon, PlusIcon, TrendingDown, TrendingUp } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -7,8 +6,7 @@ import { NumericFormat } from 'react-number-format'
 import { toast } from 'sonner'
 import z from 'zod'
 
-import { getUserBalanceQueryKey } from '@/API/hooks/user'
-import { trasactionService } from '@/API/service/transaction'
+import { useCreateTransactionMutation } from '@/API/hooks/user'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -21,7 +19,6 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
-import { UseAuthContext } from '@/context/auth'
 
 import { DatePicker } from './ui/date-peker'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form'
@@ -29,18 +26,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 export default function AddTransactionButton() {
   const [dialogIsOpen, setDialogIsOpen] = useState(false)
 
-  const queryClient = useQueryClient()
-  const { user } = UseAuthContext()
-  const { mutateAsync: createTrasaction } = useMutation({
-    mutationKey: ['createTransaction'],
-    mutationFn: data => trasactionService.create(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: getUserBalanceQueryKey({ userId: user?.id }),
-        exact: false,
-      })
-    },
-  })
+  const { mutateAsync: createTrasaction } = useCreateTransactionMutation()
 
   const formSchema = z.object({
     name: z
