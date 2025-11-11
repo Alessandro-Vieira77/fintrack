@@ -4,11 +4,15 @@ import { userService } from '@/API/service/user'
 import { UseAuthContext } from '@/context/auth'
 
 export const getUserBalanceQueryKey = (userId, from, to) => {
+  if (!from || !to) {
+    return ['balance', userId]
+  }
   return ['balance', userId, from, to]
 }
 
 export const useGetUserBalance = ({ from, to }) => {
   const { user } = UseAuthContext()
+
   return useQuery({
     queryKey: getUserBalanceQueryKey({ UserId: user.id, from, to }),
     queryFn: () => {

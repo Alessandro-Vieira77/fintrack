@@ -11,8 +11,6 @@ export default function Balance() {
   const to = searchParams.get('to')
   const { data } = useGetUserBalance({ from, to })
 
-  console.log(data)
-
   return (
     <div className="grid grid-cols-2 grid-rows-2 gap-6">
       <BalanceItem
