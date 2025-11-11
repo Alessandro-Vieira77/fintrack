@@ -54,13 +54,14 @@ export default function DateSelection() {
       queryClient.invalidateQueries({
         queryKey: [
           'balance',
-          user.id,
+          user?.id,
           formtDateToQueryParams(date.from),
           formtDateToQueryParams(date.to),
         ],
+        exact: true,
       })
     }
-  }, [navigate, date, queryClient, user.id])
+  }, [navigate, date, queryClient, user?.id])
 
   return (
     <div>
