@@ -1,7 +1,7 @@
-import { useMutation } from '@tanstack/react-query'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
+import { useSignInMutation, useSignUpMutation } from '@/API/hooks/user'
 import { STORAGE_KEY_ACCESS_TOKEN, STORAGE_KEY_REFRESH_TOKEN } from '@/constants/local-storage'
 
 import { userService } from '../API/service/user'
@@ -29,14 +29,7 @@ export const AuthContextProvider = ({ children }) => {
   const [initialization, setInitialization] = useState(true)
   const [user, setUser] = useState(null)
 
-  const { mutate: signupMutation } = useMutation({
-    mutationKey: ['signup'],
-    mutationFn: vairables => {
-      const response = userService.signup(vairables)
-
-      return response
-    },
-  })
+  const { mutate: signupMutation } = useSignUpMutation()
 
   function signUp(data) {
     signupMutation(data, {
@@ -52,16 +45,10 @@ export const AuthContextProvider = ({ children }) => {
     })
   }
 
-  const { mutate: signMutation } = useMutation({
-    mutationKey: ['login'],
-    mutationFn: login => {
-      const response = userService.signIn(login)
-      return response
-    },
-  })
+  const { mutate: signInMutation } = useSignInMutation()
 
   function signIn(data) {
-    signMutation(data, {
+    signInMutation(data, {
       onSuccess: login => {
         toast.success('Login realizado com sucesso!')
         setTokens(login.tokens)

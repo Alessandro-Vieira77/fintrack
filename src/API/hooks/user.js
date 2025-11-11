@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
 import { userService } from '@/API/service/user'
 import { UseAuthContext } from '@/context/auth'
@@ -20,5 +20,28 @@ export const useGetUserBalance = ({ from, to }) => {
     },
     staleTime: 1000 * 60 * 5, // 5 minutos
     enabled: Boolean(from) && Boolean(to) && Boolean(user?.id),
+  })
+}
+
+export const signUpMutationKey = ['signup']
+export const useSignUpMutation = () => {
+  return useMutation({
+    mutationKey: signUpMutationKey,
+    mutationFn: vairables => {
+      const response = userService.signup(vairables)
+
+      return response
+    },
+  })
+}
+
+export const signInMutationKey = ['login']
+export const useSignInMutation = () => {
+  return useMutation({
+    mutationKey: signInMutationKey,
+    mutationFn: login => {
+      const response = userService.signIn(login)
+      return response
+    },
   })
 }
