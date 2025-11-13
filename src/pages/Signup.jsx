@@ -1,7 +1,4 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { Link } from 'react-router'
-import * as zod from 'zod'
+import { Link, Navigate } from 'react-router'
 
 import PasswordInput from '@/components/password-input'
 import { Button } from '@/components/ui/button'
@@ -24,57 +21,17 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { UseAuthContext } from '@/context/auth'
-
-const signupSchema = zod
-  .object({
-    firstName: zod.string().trim().min(1, {
-      message: 'o campo nome é obrigatório',
-    }),
-    lastName: zod.string().trim().min(1, {
-      message: 'o campo sobrenome é obrigatório',
-    }),
-    email: zod
-      .string()
-      .trim()
-      .min(1, {
-        message: 'o campo e-mail é obrigatório',
-      })
-      .email({
-        message: 'o campo e-mail é inválido',
-      }),
-    password: zod.string().trim().min(6, {
-      message: 'a senha deve ter no mínimo 6 caracteres',
-    }),
-    confirmPassword: zod.string().trim().min(6, {
-      message: 'a confirmação de senha deve ter no mínimo 6 caracteres',
-    }),
-    terms: zod.boolean().refine(value => value === true, {
-      message: 'você deve aceitar nossos termos e condições',
-    }),
-  })
-  .refine(data => data.password === data.confirmPassword, {
-    message: 'as senhas não coincidem',
-    path: ['confirmPassword'],
-  })
+import { useSignUpForm } from '@/form/hooks/user'
 
 function Signup() {
-  const { user, signIn, initialization } = UseAuthContext()
+  const { user, initialization } = UseAuthContext()
 
-  const method = useForm({
-    resolver: zodResolver(signupSchema),
-    defaultValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      terms: false,
-    },
-  })
+  const { form } = useSignUpForm()
+
+  const { signUp } = UseAuthContext()
 
   function onSubmit(data) {
-    console.log(data)
-    signIn(data)
+    signUp(data)
   }
 
   if (initialization) {
@@ -82,17 +39,13 @@ function Signup() {
   }
 
   if (user) {
-    return (
-      <h1>
-        Olá, {user.firstName} {user.lastName} seja bem vindo!
-      </h1>
-    )
+    return <Navigate to={'/'} />
   }
 
   return (
     <div className="flex min-h-screen max-w-screen flex-col items-center justify-center gap-4">
-      <Form {...method}>
-        <form onSubmit={method.handleSubmit(onSubmit)} className="px-4">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="px-4">
           <Card className="mt-10 w-full max-w-[500px]">
             <CardHeader className="text-center">
               <CardTitle className="text-2xl">Crie sua conta</CardTitle>
@@ -100,7 +53,7 @@ function Signup() {
             </CardHeader>
             <CardContent className="space-y-4">
               <FormField
-                control={method.control}
+                control={form.control}
                 name="firstName"
                 render={({ field }) => (
                   <FormItem>
@@ -114,7 +67,7 @@ function Signup() {
               />
 
               <FormField
-                control={method.control}
+                control={form.control}
                 name="lastName"
                 render={({ field }) => (
                   <FormItem>
@@ -128,7 +81,7 @@ function Signup() {
               />
 
               <FormField
-                control={method.control}
+                control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
@@ -142,7 +95,7 @@ function Signup() {
               />
 
               <FormField
-                control={method.control}
+                control={form.control}
                 name="password"
                 render={({ field }) => (
                   <FormItem>
@@ -156,7 +109,7 @@ function Signup() {
               />
 
               <FormField
-                control={method.control}
+                control={form.control}
                 name="confirmPassword"
                 render={({ field }) => (
                   <FormItem>
@@ -170,7 +123,7 @@ function Signup() {
               />
 
               <FormField
-                control={method.control}
+                control={form.control}
                 name="terms"
                 render={({ field }) => (
                   <FormItem>
@@ -185,13 +138,13 @@ function Signup() {
                         />
                         <div className="text-xs">
                           <span
-                            className={`text-muted-foreground opacity-50 ${method.formState.errors.terms && 'font-bold text-red-500'}`}
+                            className={`text-muted-foreground opacity-50 ${form.formState.errors.terms && 'font-bold text-red-500'}`}
                           >
                             Ao clicar em “Criar conta”, você aceita{' '}
                           </span>
                           <a
                             href="#"
-                            className={`underline ${method.formState.errors.terms ? 'font-bold text-red-500' : 'font-bold text-white'} `}
+                            className={`underline ${form.formState.errors.terms ? 'font-bold text-red-500' : 'font-bold text-white'} `}
                           >
                             nosso termo de uso e política de privacidade
                           </a>

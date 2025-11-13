@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
-import { loginFormSchema } from '../schemas/user'
+import { loginFormSchema, signupSchemaForm } from '../schemas/user'
 
 export const useLoginForm = () => {
   const form = useForm({
@@ -13,4 +13,20 @@ export const useLoginForm = () => {
   })
 
   return form
+}
+
+export const useSignUpForm = () => {
+  const form = useForm({
+    resolver: zodResolver(signupSchemaForm),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      terms: false,
+    },
+  })
+
+  return { form }
 }

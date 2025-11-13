@@ -94,7 +94,7 @@ export const AuthContextProvider = ({ children }) => {
       value={{
         user: user,
         login: signIn,
-        signIn: signUp,
+        signUp: signUp,
         initialization,
         signOut,
         pendingLogin: signInMutation.isPending,
