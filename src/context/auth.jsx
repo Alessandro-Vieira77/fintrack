@@ -22,6 +22,7 @@ export const authContext = createContext({
   signIn: () => {},
   signOut: () => {},
   pendingLogin: () => {},
+  pendingSignUp: () => {},
 })
 
 export const UseAuthContext = () => useContext(authContext)
@@ -30,7 +31,7 @@ export const AuthContextProvider = ({ children }) => {
   const [initialization, setInitialization] = useState(true)
   const [user, setUser] = useState(null)
 
-  const { mutate: signupMutation } = useSignUpMutation()
+  const { mutate: signupMutation, isPending: pendingSignUp } = useSignUpMutation()
 
   function signUp(data) {
     signupMutation(data, {
@@ -98,6 +99,7 @@ export const AuthContextProvider = ({ children }) => {
         initialization,
         signOut,
         pendingLogin: signInMutation.isPending,
+        pendingSignUp,
       }}
     >
       {children}
