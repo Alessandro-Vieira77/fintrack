@@ -26,11 +26,8 @@ import { useSignUpForm } from '@/form/hooks/user'
 
 function Signup() {
   const { user, initialization, pendingSignUp } = UseAuthContext()
-
   const { form } = useSignUpForm()
-
   const { signUp } = UseAuthContext()
-
   function onSubmit(data) {
     signUp(data)
   }

@@ -23,6 +23,7 @@ export const userService = {
       firstName: response?.first_name,
       email: response?.email,
       password: response?.password,
+      tokens: response?.tokens,
     }
   },
   /**
@@ -72,8 +73,8 @@ export const userService = {
    */
   getBalance: async input => {
     const queryParams = new URLSearchParams()
-    queryParams.set('from', input?.from)
-    queryParams.set('to', input?.to)
+    queryParams.set('from', input.from)
+    queryParams.set('to', input.to)
 
     const { data: response } = await protecdedApi.get(`/users/me/balance?${queryParams.toString()}`)
     return response

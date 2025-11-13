@@ -7,8 +7,8 @@ import { STORAGE_KEY_ACCESS_TOKEN, STORAGE_KEY_REFRESH_TOKEN } from '@/constants
 import { userService } from '../API/service/user'
 
 const setTokens = tokens => {
-  localStorage.setItem(STORAGE_KEY_ACCESS_TOKEN, tokens?.accessToken)
-  localStorage.setItem(STORAGE_KEY_REFRESH_TOKEN, tokens?.refreshToken)
+  localStorage.setItem(STORAGE_KEY_ACCESS_TOKEN, tokens.accessToken)
+  localStorage.setItem(STORAGE_KEY_REFRESH_TOKEN, tokens.refreshToken)
 }
 
 const removeTokens = () => {
@@ -37,9 +37,8 @@ export const AuthContextProvider = ({ children }) => {
     signupMutation(data, {
       onSuccess: createdUser => {
         toast.success('Conta criada com sucesso!')
-
-        setTokens(createdUser.tokens)
         setUser(createdUser)
+        setTokens(createdUser.tokens)
       },
       onError: () => {
         toast.error('Erro ao criar conta. Tente novamente.')

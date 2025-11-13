@@ -36,7 +36,7 @@ protecdedApi.interceptors.response.use(
     ) {
       originalRequest._retry = true
       try {
-        const response = await publicApi.post('/users/refresh-token', {
+        const response = await protecdedApi.post('/users/refresh-token', {
           refreshToken,
         })
 
