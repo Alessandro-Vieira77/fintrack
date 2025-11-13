@@ -12,7 +12,7 @@ export const useLoginForm = () => {
     },
   })
 
-  return form
+  return { form }
 }
 
 export const useSignUpForm = () => {

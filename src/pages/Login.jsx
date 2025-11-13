@@ -21,14 +21,14 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useSignInForm } from '@/form/hooks/signIn'
 
 import { UseAuthContext } from '../context/auth'
+import { useLoginForm } from '../form/hooks/user'
 
 function Login() {
   const { user, login, pendingLogin, initialization } = UseAuthContext()
 
-  const { form } = useSignInForm()
+  const { form } = useLoginForm()
   function onSubmit(data) {
     login(data)
   }
