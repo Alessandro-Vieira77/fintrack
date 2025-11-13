@@ -21,6 +21,7 @@ export const authContext = createContext({
   login: () => {},
   signIn: () => {},
   signOut: () => {},
+  pendingLogin: () => {},
 })
 
 export const UseAuthContext = () => useContext(authContext)
@@ -45,17 +46,17 @@ export const AuthContextProvider = ({ children }) => {
     })
   }
 
-  const { mutate: signInMutation } = useSignInMutation()
+  const signInMutation = useSignInMutation()
 
-  function signIn(data) {
-    signInMutation(data, {
+  const signIn = data => {
+    signInMutation.mutate(data, {
       onSuccess: login => {
         toast.success('Login realizado com sucesso!')
-        setTokens(login.tokens)
         setUser(login)
+        setTokens(login.tokens)
       },
-      onError: error => {
-        toast.error('Erro ao fazer login. Tente novamente.', error)
+      onError: () => {
+        toast.error('Erro ao fazer login. Tente novamente.')
       },
     })
   }
@@ -96,6 +97,7 @@ export const AuthContextProvider = ({ children }) => {
         signIn: signUp,
         initialization,
         signOut,
+        pendingLogin: signInMutation.isPending,
       }}
     >
       {children}

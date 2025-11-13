@@ -1,8 +1,6 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { Loader2Icon } from 'lucide-react'
 import { Link } from 'react-router'
 import { Navigate } from 'react-router'
-import * as zod from 'zod'
 
 import PasswordInput from '@/components/password-input'
 import { Button } from '@/components/ui/button'
@@ -23,29 +21,14 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useSignInForm } from '@/form/hooks/signIn'
 
 import { UseAuthContext } from '../context/auth'
 
-const loginSchema = zod.object({
-  email: zod.string().trim().email({
-    message: 'o campo e-mail é inválido',
-  }),
-  password: zod.string().trim().min(6, {
-    message: 'a senha deve ter no mínimo 6 caracteres',
-  }),
-})
-
 function Login() {
-  const { login, user, initialization } = UseAuthContext()
+  const { user, login, pendingLogin, initialization } = UseAuthContext()
 
-  const methods = useForm({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-  })
-
+  const { form } = useSignInForm()
   function onSubmit(data) {
     login(data)
   }
@@ -60,8 +43,8 @@ function Login() {
 
   return (
     <div className="flex min-h-screen max-w-screen flex-col items-center justify-center gap-4">
-      <Form {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)} className="w-full max-w-[500px] px-4">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full max-w-[500px] px-4">
           <Card className="w-full max-w-[500px]">
             <CardHeader className="text-center">
               <CardTitle className="text-2xl">Entre na sua conta</CardTitle>
@@ -70,7 +53,7 @@ function Login() {
 
             <CardContent className="space-y-4">
               <FormField
-                control={methods.control}
+                control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
@@ -83,7 +66,7 @@ function Login() {
                 )}
               />
               <FormField
-                control={methods.control}
+                control={form.control}
                 name="password"
                 render={({ field }) => (
                   <FormItem>
@@ -97,7 +80,8 @@ function Login() {
               />
             </CardContent>
             <CardFooter>
-              <Button className="w-full cursor-pointer" type="submit">
+              <Button className="w-full cursor-pointer" disabled={pendingLogin} type="submit">
+                {pendingLogin && <Loader2Icon className="animate-spin" />}
                 Entrar
               </Button>
             </CardFooter>
