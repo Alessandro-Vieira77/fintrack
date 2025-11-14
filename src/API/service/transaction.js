@@ -1,3 +1,5 @@
+import querySring from 'query-string'
+
 import { protecdedApi } from '@/lib/axios'
 
 export const trasactionService = {
@@ -12,6 +14,17 @@ export const trasactionService = {
    */
   create: async input => {
     const { data: response } = await protecdedApi.post('/transactions/me', input)
+    return response
+  },
+  /**
+   * Retorna as trasações do usuárioa autenticado
+   * @param {Object} input - Dados da transação
+   * @param {string} input.from - data inicial (formato: YYYY-MM-DD)
+   * @param {string} input.to - data final (formato: YYYY-MM-DD)
+   */
+  getAll: async input => {
+    const query = querySring.stringify({ from: input.from, to: input.to })
+    const { data: response } = await protecdedApi.get(`/transactions/me?${query}`)
     return response
   },
 }
