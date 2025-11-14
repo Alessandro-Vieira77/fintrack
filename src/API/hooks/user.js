@@ -1,9 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
 import { userService } from '@/API/service/user'
 import { UseAuthContext } from '@/context/auth'
-
-import { trasactionService } from '../service/transaction'
 
 export const getUserBalanceQueryKey = ({ userId, from, to }) => {
   if (!from || !to) {
@@ -44,24 +42,6 @@ export const useSignInMutation = () => {
     mutationFn: login => {
       const response = userService.signIn(login)
       return response
-    },
-  })
-}
-
-export const createTransactionMutationKey = ['createTransaction']
-
-export const useCreateTransactionMutation = () => {
-  const queryClient = useQueryClient()
-  const { user } = UseAuthContext()
-
-  return useMutation({
-    mutationKey: createTransactionMutationKey,
-    mutationFn: data => trasactionService.create(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: getUserBalanceQueryKey({ userId: user?.id }),
-        exact: false,
-      })
     },
   })
 }

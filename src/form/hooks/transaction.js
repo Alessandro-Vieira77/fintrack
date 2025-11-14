@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
-import { useCreateTransactionMutation } from '@/API/hooks/user'
+import { useCreateTransactionMutation } from '@/API/hooks/transactions'
 
 import { createTransactionSchema } from '../schemas/transaction'
 
