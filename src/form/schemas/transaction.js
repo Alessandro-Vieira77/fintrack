@@ -17,3 +17,7 @@ export const createTransactionSchema = z.object({
     message: 'Tipo é obrigatório',
   }),
 })
+
+export const EditTransactionSchema = createTransactionSchema.extend({
+  id: z.string().uuid(),
+})
