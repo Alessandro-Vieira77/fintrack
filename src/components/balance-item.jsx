@@ -1,3 +1,5 @@
+import { formatCurrency } from '@/helpers/currency'
+
 import { Card } from './ui/card'
 
 export default function BalanceItem({ title, amount, icon }) {
@@ -9,12 +11,7 @@ export default function BalanceItem({ title, amount, icon }) {
         </div>
         <h2 className="text-sm">{title}</h2>
       </div>
-      <p className="text-2xl font-bold">
-        {Intl.NumberFormat('pt-BR', {
-          style: 'currency',
-          currency: 'BRL',
-        }).format(amount)}
-      </p>
+      <p className="text-2xl font-bold">{formatCurrency(amount)}</p>
     </Card>
   )
 }

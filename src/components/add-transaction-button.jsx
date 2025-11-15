@@ -119,8 +119,8 @@ export default function AddTransactionButton() {
                       </Button>
                       <Button
                         type="button"
-                        onClick={() => field.onChange('EXPANSE')}
-                        className={field.value === 'EXPANSE' && 'bg-secondary'}
+                        onClick={() => field.onChange('EXPENSE')}
+                        className={field.value === 'EXPENSE' && 'bg-secondary'}
                         variant="outline"
                       >
                         <TrendingDown className="text-destructive" />
