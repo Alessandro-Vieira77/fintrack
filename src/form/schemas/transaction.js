@@ -13,7 +13,7 @@ export const createTransactionSchema = z.object({
   date: z.date({
     message: 'Data é obrigatória',
   }),
-  type: z.enum(['EARNING', 'EXPANSE', 'INVESTMENT'], {
+  type: z.enum(['EARNING', 'EXPENSE', 'INVESTMENT'], {
     message: 'Tipo é obrigatório',
   }),
 })
