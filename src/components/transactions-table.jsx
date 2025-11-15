@@ -4,6 +4,7 @@ import { ExternalLinkIcon } from 'lucide-react'
 import { useSearchParams } from 'react-router'
 
 import { useGetTransactions } from '@/API/hooks/transactions'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { formatCurrency } from '@/helpers/currency'
 
 import { TransactionTypeBadge } from './transaction-type-badge'
@@ -56,7 +57,14 @@ const TransactionsTable = () => {
   const from = searchParams.get('from')
   const to = searchParams.get('to')
   const { data: transactions } = useGetTransactions({ from, to })
-  return <DataTable columns={columns} data={transactions || []} />
+  return (
+    <>
+      <h2 className="text-2xl font-bold">Transações</h2>
+      <ScrollArea className="h-[250px] max-h-[250px] rounded-md border">
+        <DataTable columns={columns} data={transactions || []} />
+      </ScrollArea>
+    </>
+  )
 }
 
 export default TransactionsTable
