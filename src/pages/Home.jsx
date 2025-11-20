@@ -23,15 +23,15 @@ function home() {
     <>
       <Header />
       <div className="space-y-4 p-8">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Dashboard</h2>
-          <div className="flex gap-2">
+        <div className="flex flex-col-reverse items-center justify-between gap-4 sm:flex-row">
+          <h2 className="w-full text-left text-2xl font-bold">Dashboard</h2>
+          <div className="flex flex-col gap-2 sm:flex-row">
             <DateSelection />
             <AddTransactionButton />
           </div>
         </div>
         {/* transactions */}
-        <div className="grid grid-cols-[2fr_1fr] gap-6">
+        <div className="grid gap-6 md:grid-cols-[2fr_1fr]">
           <Balance />
         </div>
         <TransactionsTable />

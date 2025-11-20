@@ -67,12 +67,11 @@ function FormLabel({ className, ...props }) {
   )
 }
 
-const FormControl = ({ ...props }, ref) => {
+const FormControl = ({ ...props }) => {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
 
   return (
     <Slot
-      ref={ref}
       data-slot="form-control"
       id={formItemId}
       aria-describedby={!error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`}

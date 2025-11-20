@@ -109,7 +109,7 @@ export default function AddTransactionButton() {
                 <FormItem>
                   <FormLabel htmlFor="type">Tipo</FormLabel>
                   <FormControl>
-                    <div id="type" className="grid w-full grid-cols-3 gap-4">
+                    <div id="type" className="grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
                       <Button
                         type="button"
                         onClick={() => field.onChange('EARNING')}

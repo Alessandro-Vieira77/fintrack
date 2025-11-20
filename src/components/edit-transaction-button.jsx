@@ -29,7 +29,7 @@ export const EditTransactionButton = ({ transaction }) => {
           <ExternalLinkIcon className="text-muted-foreground" />
         </Button>
       </SheetTrigger>
-      <SheetContent className="min-w-[450px] p-4">
+      <SheetContent className="p-4 sm:min-w-[450px]">
         <SheetTitle>Editar Transação</SheetTitle>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -90,7 +90,7 @@ export const EditTransactionButton = ({ transaction }) => {
                 <FormItem>
                   <FormLabel htmlFor="type">Tipo</FormLabel>
                   <FormControl>
-                    <div className="grid w-full grid-cols-3 gap-4">
+                    <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
                       <Button
                         id="type-earning"
                         type="button"

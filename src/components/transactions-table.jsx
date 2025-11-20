@@ -3,7 +3,7 @@ import { ptBR } from 'date-fns/locale'
 import { useSearchParams } from 'react-router'
 
 import { useGetTransactions } from '@/API/hooks/transactions'
-import { ScrollArea } from '@/components/ui/scroll-area'
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { formatCurrency } from '@/helpers/currency'
 
 import { EditTransactionButton } from './edit-transaction-button'
@@ -57,6 +57,7 @@ const TransactionsTable = () => {
       <h2 className="text-2xl font-bold">Transações</h2>
       <ScrollArea className="h-[250px] max-h-[250px] rounded-md border">
         <DataTable columns={columns} data={transactions || []} />
+        <ScrollBar orientation="horizontal" />
       </ScrollArea>
     </>
   )

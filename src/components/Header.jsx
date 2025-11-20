@@ -19,7 +19,7 @@ export default function Header() {
   const { user, signOut } = UseAuthContext()
   return (
     <Card className="rounded-none">
-      <CardContent className="flex items-center justify-between px-8 py-2">
+      <CardContent className="flex flex-col items-center justify-between gap-3 px-8 py-2 sm:flex-row">
         <div>
           <img src={logo} alt="fintrack" />
         </div>
