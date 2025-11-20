@@ -38,9 +38,9 @@ export const EditTransactionButton = ({ transaction }) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nome</FormLabel>
+                  <FormLabel htmlFor="name">Nome</FormLabel>
                   <FormControl>
-                    <Input placeholder="Digite seu nome" {...field} />
+                    <Input id="name" placeholder="Digite seu nome" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -51,9 +51,10 @@ export const EditTransactionButton = ({ transaction }) => {
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Valor</FormLabel>
+                  <FormLabel htmlFor="amount">Valor</FormLabel>
                   <FormControl>
                     <NumericFormat
+                      id="amount"
                       {...field}
                       placeholder="Digite o valor da transação"
                       thousandSeparator="."
@@ -87,10 +88,11 @@ export const EditTransactionButton = ({ transaction }) => {
               name="type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tipo</FormLabel>
+                  <FormLabel htmlFor="type">Tipo</FormLabel>
                   <FormControl>
                     <div className="grid w-full grid-cols-3 gap-4">
                       <Button
+                        id="type-earning"
                         type="button"
                         onClick={() => field.onChange('EARNING')}
                         className={field.value === 'EARNING' && 'bg-secondary'}
@@ -100,6 +102,7 @@ export const EditTransactionButton = ({ transaction }) => {
                         Ganho
                       </Button>
                       <Button
+                        id="type-expense"
                         type="button"
                         onClick={() => field.onChange('EXPENSE')}
                         className={field.value === 'EXPENSE' && 'bg-secondary'}
@@ -109,6 +112,7 @@ export const EditTransactionButton = ({ transaction }) => {
                         Gastos
                       </Button>
                       <Button
+                        id="type-investment"
                         type="button"
                         onClick={() => field.onChange('INVESTMENT')}
                         className={field.value === 'INVESTMENT' && 'bg-secondary'}

@@ -56,9 +56,9 @@ export default function AddTransactionButton() {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nome</FormLabel>
+                  <FormLabel htmlFor="name">Nome</FormLabel>
                   <FormControl>
-                    <Input placeholder="Digite seu nome" {...field} />
+                    <Input id="name" autoComplete="off" placeholder="Digite seu nome" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -69,9 +69,11 @@ export default function AddTransactionButton() {
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Valor</FormLabel>
+                  <FormLabel htmlFor="amount">Valor</FormLabel>
                   <FormControl>
                     <NumericFormat
+                      id="amount"
+                      autoComplete="off"
                       {...field}
                       placeholder="Digite o valor da transação"
                       thousandSeparator="."
@@ -105,9 +107,9 @@ export default function AddTransactionButton() {
               name="type"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tipo</FormLabel>
+                  <FormLabel htmlFor="type">Tipo</FormLabel>
                   <FormControl>
-                    <div className="grid w-full grid-cols-3 gap-4">
+                    <div id="type" className="grid w-full grid-cols-3 gap-4">
                       <Button
                         type="button"
                         onClick={() => field.onChange('EARNING')}

@@ -1,5 +1,6 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { XIcon } from 'lucide-react'
+import { forwardRef } from 'react'
 
 import { cn } from '@/lib/utils'
 
@@ -19,7 +20,7 @@ function DialogClose({ ...props }) {
   return <DialogPrimitive.Close data-slot="dialog-close" {...props} />
 }
 
-function DialogOverlay({ className, ...props }) {
+const DialogOverlay = forwardRef(({ className, ...props }, ref) => {
   return (
     <DialogPrimitive.Overlay
       data-slot="dialog-overlay"
@@ -28,11 +29,14 @@ function DialogOverlay({ className, ...props }) {
         className,
       )}
       {...props}
+      ref={ref}
     />
   )
-}
+})
 
-function DialogContent({ className, children, showCloseButton = true, ...props }) {
+DialogOverlay.displayName = 'DialogOverlay'
+
+const DialogContent = ({ className, children, showCloseButton = true, ...props }) => {
   return (
     <DialogPortal data-slot="dialog-portal">
       <DialogOverlay />
