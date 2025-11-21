@@ -4,6 +4,7 @@ import AddTransactionButton from '@/components/add-transaction-button'
 import Balance from '@/components/balance'
 import DateSelection from '@/components/date-selection'
 import Header from '@/components/header'
+import Loader from '@/components/loader'
 import TransactionsTable from '@/components/transactions-table'
 
 import { UseAuthContext } from '../context/auth'
@@ -12,7 +13,13 @@ function home() {
   const { user, initialization } = UseAuthContext()
 
   if (initialization) {
-    return null
+    return (
+      <div className="flex h-screen w-screen items-center justify-center">
+        <div className="flex gap-2">
+          aguarde por favor... <Loader size={30} />
+        </div>
+      </div>
+    )
   }
 
   if (!user) {

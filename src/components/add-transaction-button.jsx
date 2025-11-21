@@ -1,4 +1,4 @@
-import { Landmark, Loader2Icon, PlusIcon, TrendingDown, TrendingUp } from 'lucide-react'
+import { Landmark, PlusIcon, TrendingDown, TrendingUp } from 'lucide-react'
 import { useState } from 'react'
 import { NumericFormat } from 'react-number-format'
 import { toast } from 'sonner'
@@ -17,6 +17,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { UseCreateTrasactionForm } from '@/form/hooks/transaction'
 
+import Loader from './loader'
 import { DatePicker } from './ui/date-peker'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form'
 
@@ -151,7 +152,7 @@ export default function AddTransactionButton() {
                 </Button>
               </DialogClose>
               <Button type="submit" disabled={form.formState.isSubmitting}>
-                {form.formState.isSubmitting && <Loader2Icon className="animate-spin" />}
+                {form.formState.isSubmitting && <Loader />}
                 Adicionar
               </Button>
             </DialogFooter>

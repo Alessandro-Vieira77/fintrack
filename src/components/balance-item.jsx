@@ -1,5 +1,6 @@
 import { formatCurrency } from '@/helpers/currency'
 
+import Loader from './loader'
 import { Card } from './ui/card'
 
 export default function BalanceItem({ title, amount, icon }) {
@@ -11,7 +12,7 @@ export default function BalanceItem({ title, amount, icon }) {
         </div>
         <h2 className="text-sm">{title}</h2>
       </div>
-      <p className="text-2xl font-bold">{formatCurrency(amount)}</p>
+      <p className="text-2xl font-bold">{amount ? formatCurrency(amount) : <Loader />}</p>
     </Card>
   )
 }
