@@ -3,7 +3,7 @@ import { Navigate } from 'react-router'
 import AddTransactionButton from '@/components/add-transaction-button'
 import Balance from '@/components/balance'
 import DateSelection from '@/components/date-selection'
-import Header from '@/components/header'
+import Header from '@/components/header.jsx'
 import Loader from '@/components/loader'
 import TransactionsTable from '@/components/transactions-table'
 
