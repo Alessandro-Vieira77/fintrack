@@ -2,7 +2,7 @@ import { Avatar } from '@radix-ui/react-avatar'
 import { ChevronDownIcon, LogOutIcon } from 'lucide-react'
 
 import { UseAuthContext } from '@/context/auth'
-import logo from '@/images/logo.svg'
+import Logo from '@/images/Logo.svg'
 
 import { AvatarFallback, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
@@ -21,7 +21,7 @@ export default function Header() {
     <Card className="rounded-none">
       <CardContent className="flex flex-col items-center justify-between gap-3 px-8 py-2 sm:flex-row">
         <div>
-          <img src={logo} alt="fintrack" />
+          <img src={Logo} alt="fintrack" />
         </div>
         <div>
           <DropdownMenu>
