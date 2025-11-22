@@ -163,8 +163,10 @@ function Signup() {
         </form>
       </Form>
       <div className="mb-6 flex max-w-[500px] items-center justify-center gap-1">
-        <p className="text-muted-foreground opacity-50">Ainda não possui uma conta? </p>
-        <Button variant="link" className="p-0" asChild>
+        <p className="text-muted-foreground text-xs opacity-50 sm:text-base">
+          Ainda não possui uma conta?{' '}
+        </p>
+        <Button variant="link" className="p-0 text-xs sm:text-base" asChild>
           <Link to={'/login'} className="text-primary">
             Faça login
           </Link>
