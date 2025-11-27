@@ -1,4 +1,4 @@
-![home fintrack](https://i.imgur.com/bQ4JKFZ.png)
+![home fintrack](https://i.imgur.com/KhCqZyA.png)
 
 ### Technologies
 - Vite
@@ -64,7 +64,7 @@ npm run dev
 - login
 
 ### Home
-![home fintrack](https://i.imgur.com/bQ4JKFZ.png)
+![home fintrack](https://i.imgur.com/KhCqZyA.png)
 #### On the homepage you will have
 - The control panel shows your balance, expenses, and investments.
 - Select the transaction date and view your transactions from previous days using the date selector.
@@ -81,7 +81,7 @@ npm run dev
 ## Fully responsive design
   <img src="https://i.imgur.com/cWiIZ4r.png" alt="home page" width="300"  />
   <img src="https://i.imgur.com/62wFQjJ.png" alt="task page" width="300" />
-  <img src="https://i.imgur.com/YXE9i8v.png" alt="details page" width="300" />
+  <img src="https://i.imgur.com/0q9Lgjo.png" alt="details page" width="300" />
   <img src="https://i.imgur.com/VbAfHfP.png" alt="details page" width="300" />
   <img src="https://i.imgur.com/v1VKSO8.png" alt="details page" width="300" />
 
