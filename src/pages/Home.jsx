@@ -5,6 +5,7 @@ import Balance from '@/components/balance'
 import DateSelection from '@/components/date-selection'
 import Header from '@/components/Header'
 import Loader from '@/components/loader'
+import { PieGraphic } from '@/components/PieGraphic'
 import TransactionsTable from '@/components/transactions-table'
 
 import { UseAuthContext } from '../context/auth'
@@ -38,8 +39,9 @@ function home() {
           </div>
         </div>
         {/* transactions */}
-        <div className="grid gap-6 md:grid-cols-[2fr_1fr]">
+        <div className="grid grid-cols-[1fr] gap-6 lg:grid-cols-[2fr_1fr]">
           <Balance />
+          <PieGraphic />
         </div>
         <TransactionsTable />
       </div>
